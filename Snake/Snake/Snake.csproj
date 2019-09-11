@@ -55,7 +55,7 @@
     <Compile Include="IGameObject.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StaticBullet.cs" />
+    <Compile Include="SimpleBullet.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

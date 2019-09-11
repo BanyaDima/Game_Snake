@@ -9,16 +9,19 @@ namespace Snake
 {
     class Bullet : IGameObject
     {
-        protected const int size = 20;
+        protected ConsoleGraphics _graphics;
+        protected const int size = 40;
         protected int _x, _y;
-        protected readonly uint _color;
-        protected const int speed = 2;
+        protected  uint _color;
+        protected const int speed = 40;
+        private string direction;
 
-        public Bullet(uint color, int x, int y)
+        public Bullet(uint color, int x, int y, ConsoleGraphics graphics)
         {
             _color = color;
             _x = x;
             _y = y;
+            _graphics = graphics;
         }
 
         public void Render(ConsoleGraphics graphics)
@@ -26,33 +29,50 @@ namespace Snake
             graphics.FillRectangle(_color, _x, _y, size, size);
         }
 
-        public void Update(Canvas canvas)
+        public void Update()
         {
             if (Input.IsKeyDown(Keys.LEFT) && !Input.IsKeyDown(Keys.DOWN) && !Input.IsKeyDown(Keys.UP))
             {
-                _x -= speed;
-                if (_x < 0)
-                    _x = canvas.ClientWidth;
+                direction = "Left";;
             }
             if (Input.IsKeyDown(Keys.RIGHT) && !Input.IsKeyDown(Keys.DOWN) && !Input.IsKeyDown(Keys.UP))
             {
-                _x += speed;
-                if (_x > canvas.ClientWidth)
-                    _x = 0;
+                direction = "Right";
             }
             if (Input.IsKeyDown(Keys.UP))
             {
-                _y -= speed;
-                if (_y < 0)
-                    _y = canvas.ClientHeight;
+                direction = "Up";
             }
             if (Input.IsKeyDown(Keys.DOWN))
             {
-                _y += speed;
-                if (_y > canvas.ClientHeight)
-                    _y = 0;
+                direction = "Down";
             }
 
+            switch (direction)
+            {
+                case "Right":
+                    _x += speed;
+                    if (_x > _graphics.ClientWidth)
+                        _x = 0;
+                    break;
+                case "Left":
+                    _x -= speed;
+                    if (_x < 0)
+                        _x = _graphics.ClientWidth;
+                    break;
+                case "Down":
+                    _y += speed;
+                    if (_y > _graphics.ClientHeight)
+                        _y =0 ;
+                    break;
+                case "Up":
+                    _y -= speed;
+                    if (_y < 0)
+                        _y = _graphics.ClientHeight;
+                    break;
+                default:
+                    break;
+            }
 
         }
     }

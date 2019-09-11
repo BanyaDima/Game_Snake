@@ -11,6 +11,6 @@ namespace Snake
     {
         void Render(ConsoleGraphics graphics);
 
-        void Update(Canvas canvas);
+        void Update();
     }
 }

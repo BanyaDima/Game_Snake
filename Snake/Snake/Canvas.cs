@@ -7,7 +7,7 @@ using NConsoleGraphics;
 
 namespace Snake
 {
-    class Canvas : IGameObject
+    class Canvas 
     {
         private readonly uint _color;
         public int ClientWidth { get; }
@@ -23,8 +23,6 @@ namespace Snake
         public void Render(ConsoleGraphics graphics)
         {
             graphics.FillRectangle(_color, 0, 0, ClientWidth, ClientHeight);
-        }
-
-        public void Update(Canvas canvas){}
+        }       
     }
 }
