@@ -20,13 +20,15 @@ namespace Snake
             _graphics = graphics;
         }
 
+        private bool contact = false;
+        
         public void Play()
         {
             Canvas canvas = new Canvas(0xffffffff, _graphics.ClientWidth, _graphics.ClientHeight);
-            Bullet bulet = new Bullet(0xFF00FF00, 0, 0, _graphics);
-
-            //SimpleBullet[,] simpleBullets = SimpleBullet.SimpleBulletsMas();
-
+            Bullet bulet = new Bullet(0xFF00FF00, 0, 0, _graphics);            
+            SimpleBullet.SimpleBuletsList(ref simpleBullet, _graphics);
+            Random random = new Random();
+            int index = random.Next(0, simpleBullet.Count); 
 
             while (true)
             {
@@ -34,14 +36,21 @@ namespace Snake
 
                 canvas.Render(_graphics);
                 bulet.Render(_graphics);
-                //simpleBullet.Render(_graphics);
+                simpleBullet[index].Render(_graphics);
 
+                SimpleBullet.Contact((SimpleBullet)simpleBullet[index], bulet, ref contact);
 
+                if(contact)
+                {
+                    bullet.Add(simpleBullet[index]);
+                    simpleBullet.RemoveAt(index);
+                    index = random.Next(0, simpleBullet.Count);
+                }
 
-
-                _graphics.FlipPages();
+               _graphics.FlipPages();
                 Thread.Sleep(100);
             }
         }
+
     }
 }

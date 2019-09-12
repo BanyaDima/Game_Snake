@@ -10,46 +10,56 @@ namespace Snake
     class SimpleBullet : Bullet, IGameObject
     {
         private const int size = 40;
-        private int _x, _y;
         private uint _color;
         private const int speed = 0;
         private ConsoleGraphics _graphics;
+        private const int _columns = 11;
+        private const int _lines = 11;
+        public int X { get; private set; }
+        public int Y { get; private set; }
 
         public SimpleBullet(uint color, int x, int y, ConsoleGraphics graphics) : base(color, x, y, graphics)
         {
             _color = color;
-            _x = x;
-            _y = y;
+            X = x;
+            Y = y;
             _graphics = graphics;
         }
-        public static SimpleBullet[,] SimpleBulletsMas()
-        {
-            SimpleBullet[,] simpleBullets = new SimpleBullet[11, 11];
-            for (int i = 0; i < 11; i++)
-            {
-                int y = 0;
 
-                for (int j = 0; j < 11; j++)
+        public static CustomList.List<IGameObject> SimpleBuletsList(ref CustomList.List<IGameObject> list, ConsoleGraphics _graphics)
+        {
+            int y = 0;
+            for (int i = 0; i < _lines; i++)
+            {
+                int x = 0;
+
+                for (int j = 0; j < _columns; j++)
                 {
-                    
-                    int x = 0;
-                    simpleBullets[i, j]._x = x;
-                    simpleBullets[i, j]._y = j;
-                    simpleBullets[i, j]._color = 0xFF00FF00;
+                    list.Add(new SimpleBullet(0xFF00FF00, x, y, _graphics));
+
                     x += 40;
                 }
                 y += 40;
             }
-
-            return simpleBullets;
+            return list;
         }
-
 
         public void Render(ConsoleGraphics _graphics)
         {
-            _graphics.FillRectangle(_color, _x, _y, size, size);
+            _graphics.FillRectangle(_color, X, Y, size, size);
         }
         public void Update() { }
 
+        public static void Contact(SimpleBullet simpleBullet, Bullet bullet, ref bool contact)
+        {
+            if (simpleBullet.X == bullet.X && simpleBullet.Y == bullet.Y)
+            {
+                contact = true;
+            }
+            else
+            {
+                contact = false;
+            }                 
+        }
     }
 }
