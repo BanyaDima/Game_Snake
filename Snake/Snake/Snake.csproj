@@ -49,13 +49,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bullet.cs" />
+    <Compile Include="SnekePartMove.cs" />
     <Compile Include="Canvas.cs" />
     <Compile Include="GameEngine.cs" />
     <Compile Include="IGameObject.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SimpleBullet.cs" />
+    <Compile Include="SimpleSnakePart.cs" />
+    <Compile Include="Snake.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -22,7 +22,6 @@ namespace Snake
 
             GameEngine game = new GameEngine(graphics);
             game.Play();
-
         }
     }
 }

@@ -12,59 +12,56 @@ namespace Snake
     class GameEngine
     {
         private ConsoleGraphics _graphics;
-        private CustomList.List<Bullet> bullets = new CustomList.List<Bullet>();
-        private CustomList.List<SimpleBullet> simpleBullets = new CustomList.List<SimpleBullet>();
+        private CustomList.List<SnekePartMove> snakeParts = new CustomList.List<SnekePartMove>();
+        private CustomList.List<SimpleSnakePart> simpleSnakeParts = new CustomList.List<SimpleSnakePart>();
         private bool contact = false;
         public bool isAlive = true;
         private int points;
-        private int bestpoints;
+        //private int bestPoints;
 
         public GameEngine(ConsoleGraphics graphics)
         {
             _graphics = graphics;
         }
-
-
+        
         public void Play()
         {
             Canvas canvas = new Canvas(0xffffffff, _graphics.ClientWidth, _graphics.ClientHeight);
-            Bullet bullet = new Bullet(0xFF00FF00, 0, 0, _graphics);
+            SnekePartMove snakePart = new SnekePartMove(0xFF1e8a19, 0, 0, _graphics);
+            SimpleSnakePart simpleSnakePart = new SimpleSnakePart();
 
-            SimpleBullet.SimpleBuletsList(ref simpleBullets, _graphics);
+            simpleSnakePart.SimplePartsList(ref simpleSnakeParts, _graphics);
+
             Random random = new Random();
-            int index = random.Next(0, simpleBullets.Count);
+            int index = random.Next(0, simpleSnakeParts.Count);
 
-            bullets.Add(bullet);
+            Snake snake = new Snake(this);
+            snake.Add(snakePart, ref snakeParts);
 
             while (isAlive)
             {
-                for (int i = 0; i < bullets.Count; i++)
-                {
-                    bullets[i].Update(this); 
-                }
-
                 canvas.Render(_graphics);
 
-                for (int i = 0; i < bullets.Count; i++)
-                {
-                    bullets[i].Render(_graphics);                   
-                }
+                snake.Render(_graphics, snakeParts);
+                snake.Move(snakeParts);
 
-                simpleBullets[index].Render(_graphics);
-                SimpleBullet.Contact(simpleBullets[index], bullet, ref contact);
+                simpleSnakeParts[index].Render(_graphics);
+                snake.ContactWithOneself(snakeParts);
+                simpleSnakePart.Contact(simpleSnakeParts[index], snakePart, ref contact);
 
                 if (contact)
                 {
-                    bullet.AddNewBullet(ref bullets);                    
-                    simpleBullets.RemoveAt(index);
-                    index = random.Next(0, simpleBullets.Count);
+                    snake.Add(simpleSnakeParts[index], ref snakeParts);
+                    simpleSnakeParts.RemoveAt(index);
+                    index = random.Next(0, simpleSnakeParts.Count);
+                    points++;
                 }
 
                 if (!isAlive)
                 {
-                    _graphics.DrawString("GAME OVER", "Arial", 0xFF00FF00, 100, 200, 30);
-                    _graphics.DrawString($"You have: {points} points", "Arial", 0xFF00FF00, 100, 250, 16);
-                    _graphics.DrawString($"Best result: {bestpoints} points", "Arial", 0xFF00FF00, 100, 270, 16);
+                    _graphics.DrawString("GAME OVER", "Arial", 0xFFbd1a1a, 100, 200, 30);
+                    _graphics.DrawString($"You have: {points} points", "Arial", 0xFFbd1a1a, 100, 250, 16);
+                    //_graphics.DrawString($"Best result: {bestPoints} points", "Arial", 0xFF00FF00, 100, 270, 16);                    
                 }
                 _graphics.FlipPages();
                 Thread.Sleep(100);

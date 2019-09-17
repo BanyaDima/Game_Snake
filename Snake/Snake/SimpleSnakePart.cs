@@ -7,14 +7,16 @@ using NConsoleGraphics;
 
 namespace Snake
 {
-    class SimpleBullet : Bullet
+    class SimpleSnakePart : SnekePartMove
     {
         private const int _columns = 12;
         private const int _lines = 12;
 
-        public SimpleBullet(uint color, int x, int y, ConsoleGraphics graphics) : base(color, x, y, graphics) { }
+        public SimpleSnakePart() : base() { }
 
-        public static CustomList.List<SimpleBullet> SimpleBuletsList(ref CustomList.List<SimpleBullet> list, ConsoleGraphics _graphics)
+        public SimpleSnakePart(uint color, int x, int y, ConsoleGraphics graphics) : base(color, x, y, graphics) { }
+
+        public  void SimplePartsList(ref CustomList.List<SimpleSnakePart> list, ConsoleGraphics _graphics)
         {
             int y = 0;
             for (int i = 0; i < _lines; i++)
@@ -23,12 +25,11 @@ namespace Snake
 
                 for (int j = 0; j < _columns; j++)
                 {
-                    list.Add(new SimpleBullet(0xFF00FF00, x, y, _graphics));
+                    list.Add(new SimpleSnakePart(0xFF325230, x, y, _graphics));
                     x += 40;
                 }
                 y += 40;
-            }
-            return list;
+            }            
         }
 
         public override void Render(ConsoleGraphics graphics)
@@ -36,7 +37,7 @@ namespace Snake
             base.Render(graphics);
         }
 
-        public static void Contact(SimpleBullet simpleBullet, Bullet bullet, ref bool contact)
+        public void Contact(SimpleSnakePart simpleBullet, SnekePartMove bullet, ref bool contact)
         {
             if (simpleBullet.X == bullet.X && simpleBullet.Y == bullet.Y)
             {
