@@ -13,11 +13,14 @@ namespace Snake
         protected const int size = 40;
         protected readonly uint _color;
         protected const int speed = 40;
+        protected const int _columns = 12;
+        protected const int _lines = 12;
         private int xSpeed;
         private int ySpeed;
-
         public int X { get; internal set; }
         public int Y { get; internal set; }
+        public int SideBorder { get => size * _columns; }
+        public int BottomLine { get => size * _lines; }
 
         public SnekePartMove() { }
 
@@ -64,7 +67,7 @@ namespace Snake
             X += xSpeed;
             Y += ySpeed;
 
-            if (X > _graphics.ClientWidth - size || Y > _graphics.ClientHeight - size)
+            if (X > SideBorder - size || Y > BottomLine - size)
                 engine.isAlive = false;
             else if (X < 0 || Y < 0)
                 engine.isAlive = false;

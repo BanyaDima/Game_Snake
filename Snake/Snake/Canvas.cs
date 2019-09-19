@@ -9,8 +9,8 @@ namespace Snake
 {
     class Canvas
     {
-        private const int _columns = 12;
-        private const int _lines = 12;
+        //private const int _columns = 12;
+        //private const int _lines = 12;
         private readonly uint _color;
         public int Width { get; }
         public int Height { get; }
@@ -25,19 +25,8 @@ namespace Snake
         public void Render(ConsoleGraphics graphics)
         {
             graphics.FillRectangle(_color, 0, 0, Width, Height);
-
-            int y = 0;
-            for (int i = 0; i <_lines; i++)
-            {
-                int x = 0;
-                for (int j = 0; j < _columns; j++)
-                {
-                    graphics.DrawLine(0xff00ff00, x, y, x, Height, 1);
-                    graphics.DrawLine(0xff00ff00, 0, y, Width, y, 1);
-                    x += 40;
-                }               
-                y += 40;
-            }
+            graphics.DrawLine(0xFFbd1a1a, 480, 0, 480, 480, 1);
+            graphics.DrawLine(0xFFbd1a1a, 0, 480, 480, 480, 1);
         }
     }
 }

@@ -9,27 +9,27 @@ namespace Snake
 {
     class SimpleSnakePart : SnekePartMove
     {
-        private const int _columns = 12;
-        private const int _lines = 12;
-
         public SimpleSnakePart() : base() { }
 
         public SimpleSnakePart(uint color, int x, int y, ConsoleGraphics graphics) : base(color, x, y, graphics) { }
 
-        public  void SimplePartsList(ref CustomList.List<SimpleSnakePart> list, ConsoleGraphics _graphics)
+        public void CriateSimplePart(ref CustomList.List<SimpleSnakePart> listSimple, CustomList.List<SnekePartMove> list, ConsoleGraphics _graphics)
         {
-            int y = 0;
-            for (int i = 0; i < _lines; i++)
-            {
-                int x = 0;
+            Random random = new Random();
 
-                for (int j = 0; j < _columns; j++)
+            int xCord = size * random.Next(1, _columns);
+            int yCord = size * random.Next(1, _lines);
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (xCord == list[i].X && yCord == list[i].Y)
                 {
-                    list.Add(new SimpleSnakePart(0xFF325230, x, y, _graphics));
-                    x += 40;
+                    i = -1;
+                    xCord = size * random.Next(1, _columns);
+                    yCord = size * random.Next(1, _lines);
                 }
-                y += 40;
-            }            
+            }
+            listSimple.Add(new SimpleSnakePart(0xFF325230, xCord, yCord, _graphics));          
         }
 
         public override void Render(ConsoleGraphics graphics)
@@ -37,9 +37,9 @@ namespace Snake
             base.Render(graphics);
         }
 
-        public void Contact(SimpleSnakePart simpleBullet, SnekePartMove bullet, ref bool contact)
+        public void Contact(SimpleSnakePart simpleParts, SnekePartMove moveParts, ref bool contact)
         {
-            if (simpleBullet.X == bullet.X && simpleBullet.Y == bullet.Y)
+            if (simpleParts.X == moveParts.X && simpleParts.Y == moveParts.Y)
             {
                 contact = true;
             }

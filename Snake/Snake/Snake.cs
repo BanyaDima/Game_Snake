@@ -44,7 +44,9 @@ namespace Snake
             for (int i = 1; i < snake.Count; i++)
             {
                 if (snake[0].X == snake[i].X && snake[0].Y == snake[i].Y)
+                {
                     _gameEngine.isAlive = false;
+                }
             }
         }
     }

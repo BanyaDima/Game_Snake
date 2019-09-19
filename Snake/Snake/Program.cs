@@ -18,10 +18,17 @@ namespace Snake
             Console.CursorVisible = false;
             Console.Clear();
 
-            ConsoleGraphics graphics = new ConsoleGraphics();
+            while (true)
+            {
+                ConsoleGraphics graphics = new ConsoleGraphics();
+                GameEngine game = new GameEngine(graphics);
 
-            GameEngine game = new GameEngine(graphics);
-            game.Play();
+                game.Play();
+                game.Restart();
+
+                if (!game.Restarting)
+                    break;                
+            }
         }
     }
 }
