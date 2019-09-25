@@ -42,7 +42,7 @@ namespace Snake
                 }
                 _graphics.FlipPages();
 
-                Thread.Sleep(20);
+                Thread.Sleep(30);
             }
         }
 

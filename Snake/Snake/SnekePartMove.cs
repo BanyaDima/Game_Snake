@@ -49,27 +49,23 @@ namespace Snake
         {
             if (Input.IsKeyDown(Keys.LEFT))
             {
-                ySpeed = 0;
-                xSpeed = 0;
-                xSpeed -= speed;
+                ySpeed = 0;                
+                xSpeed = -speed;
             }
             else if (Input.IsKeyDown(Keys.RIGHT))
             {
-                ySpeed = 0;
-                xSpeed = 0;
-                xSpeed += speed;
+                ySpeed = 0;                
+                xSpeed = speed;
             }
             else if (Input.IsKeyDown(Keys.UP))
             {
                 xSpeed = 0;
-                ySpeed = 0;
-                ySpeed -= speed;
+                ySpeed = -speed;
             }
             else if (Input.IsKeyDown(Keys.DOWN))
             {
-                xSpeed = 0;
-                ySpeed = 0;
-                ySpeed += speed;
+                xSpeed = 0;               
+                ySpeed = speed;
             }
 
             X += xSpeed;
