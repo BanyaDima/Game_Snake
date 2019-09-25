@@ -16,11 +16,6 @@ namespace Snake
             _gameEngine = gameEngine;
         }
 
-        public void Add(SnekePartMove bullet, ref CustomList.List<SnekePartMove> snake)
-        {
-            snake.Add(bullet);
-        }
-
         public void Move(CustomList.List<SnekePartMove> snake)
         {
             SnekePartMove head = snake[0];
@@ -39,15 +34,15 @@ namespace Snake
                 snake[i].Render(consoleGraphics);
             }
         }
-        public void ContactWithOneself(CustomList.List<SnekePartMove> snake)
+
+        public bool ContactWithOneself(CustomList.List<SnekePartMove> snake)
         {
             for (int i = 1; i < snake.Count; i++)
             {
                 if (snake[0].X == snake[i].X && snake[0].Y == snake[i].Y)
-                {
-                    _gameEngine.isAlive = false;
-                }
+                    return true;     
             }
+            return false;
         }
     }
 }

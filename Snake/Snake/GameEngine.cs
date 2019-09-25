@@ -11,26 +11,22 @@ namespace Snake
 {
     class GameEngine
     {
-        private ConsoleGraphics _graphics;
         private CustomList.List<SnekePartMove> snakeParts = new CustomList.List<SnekePartMove>();
-        private CustomList.List<SimpleSnakePart> simpleSnakeParts = new CustomList.List<SimpleSnakePart>();
-        private bool contact = false;
-        public bool isAlive = true;
+        private ConsoleGraphics _graphics;
+        private Canvas _canvas;
         private int points;
-        public bool Restarting { get; private set; }
 
-        public GameEngine(ConsoleGraphics graphics)
+        public GameEngine(ConsoleGraphics graphics, Canvas canvas)
         {
             _graphics = graphics;
+            _canvas = canvas;
         }
 
-        public void Restart()
+        public bool Restart()
         {
-            Canvas canvas = new Canvas(0xffffffff, _graphics.ClientWidth, _graphics.ClientHeight);
-
             while (true)
             {
-                canvas.Render(_graphics);
+                _canvas.Render(_graphics);
 
                 _graphics.DrawString("GAME OVER", "Arial", 0xFFbd1a1a, 100, 200, 30);
                 _graphics.DrawString($"You have: {points} points", "Arial", 0xFFbd1a1a, 100, 250, 16);
@@ -38,45 +34,42 @@ namespace Snake
 
                 if (Input.IsKeyDown(Keys.KEY_N))
                 {
-                    Restarting = false;
-                    break;
+                    return  false;
                 }
                 else if (Input.IsKeyDown(Keys.KEY_Y))
                 {
-                    Restarting = true;
-                    break;
+                     return true;
                 }
                 _graphics.FlipPages();
+
+                Thread.Sleep(20);
             }
         }
 
         public void Play()
         {
-            Canvas canvas = new Canvas(0xffffffff, _graphics.ClientWidth, _graphics.ClientHeight);
             SnekePartMove snakePart = new SnekePartMove(0xFF1e8a19, 0, 200, _graphics);
-            SimpleSnakePart simpleSnakePart = new SimpleSnakePart();
+            SimpleSnakePart simpleSnakePart = new SimpleSnakePart(0xFF325230, 400, 200, _graphics);
             Snake snake = new Snake(this);
 
-            snake.Add(snakePart, ref snakeParts);
-            simpleSnakePart.CriateSimplePart(ref simpleSnakeParts, snakeParts, _graphics);
+            snakeParts.Add(snakePart);            
 
-            while (isAlive)
+            while (snakePart.IsAlive())
             {
-                canvas.Render(_graphics);
+                _canvas.Render(_graphics);
 
                 snake.Render(_graphics, snakeParts);
                 snake.Move(snakeParts);
 
-                simpleSnakeParts[0].Render(_graphics);
+                simpleSnakePart.Render(_graphics);
 
-                snake.ContactWithOneself(snakeParts);
-                simpleSnakePart.Contact(simpleSnakeParts[0], snakePart, ref contact);
+                if (snake.ContactWithOneself(snakeParts))
+                    break;
 
-                if (contact)
+                if (simpleSnakePart.Contact(simpleSnakePart, snakePart))
                 {
-                    snake.Add(simpleSnakeParts[0], ref snakeParts);
-                    simpleSnakeParts.RemoveAt(0);
-                    simpleSnakePart.CriateSimplePart(ref simpleSnakeParts, snakeParts, _graphics);
+                    snakeParts.Add(simpleSnakePart);
+                    simpleSnakePart = simpleSnakePart.CriateSimplePart(snakeParts, _graphics);
                     points++;
                 }
         

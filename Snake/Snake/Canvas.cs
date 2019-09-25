@@ -8,10 +8,10 @@ using NConsoleGraphics;
 namespace Snake
 {
     class Canvas
-    {
-        //private const int _columns = 12;
-        //private const int _lines = 12;
+    {        
         private readonly uint _color;
+        private readonly int xMax = 480;
+        private readonly int yMax = 480;
         public int Width { get; }
         public int Height { get; }
 
@@ -25,8 +25,8 @@ namespace Snake
         public void Render(ConsoleGraphics graphics)
         {
             graphics.FillRectangle(_color, 0, 0, Width, Height);
-            graphics.DrawLine(0xFFbd1a1a, 480, 0, 480, 480, 1);
-            graphics.DrawLine(0xFFbd1a1a, 0, 480, 480, 480, 1);
+            graphics.DrawLine(0xFFbd1a1a, xMax, 0, xMax, yMax, 2);
+            graphics.DrawLine(0xFFbd1a1a, 0, yMax, xMax, yMax, 2);
         }
     }
 }

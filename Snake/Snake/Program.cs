@@ -21,12 +21,12 @@ namespace Snake
             while (true)
             {
                 ConsoleGraphics graphics = new ConsoleGraphics();
-                GameEngine game = new GameEngine(graphics);
+                Canvas canvas = new Canvas(0xffffffff, graphics.ClientWidth, graphics.ClientHeight);
+                GameEngine game = new GameEngine(graphics, canvas);
 
                 game.Play();
-                game.Restart();
-
-                if (!game.Restarting)
+                
+                if (!game.Restart())
                     break;                
             }
         }

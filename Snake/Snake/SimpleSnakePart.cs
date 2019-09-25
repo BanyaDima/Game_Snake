@@ -9,11 +9,9 @@ namespace Snake
 {
     class SimpleSnakePart : SnekePartMove
     {
-        public SimpleSnakePart() : base() { }
-
         public SimpleSnakePart(uint color, int x, int y, ConsoleGraphics graphics) : base(color, x, y, graphics) { }
 
-        public void CriateSimplePart(ref CustomList.List<SimpleSnakePart> listSimple, CustomList.List<SnekePartMove> list, ConsoleGraphics _graphics)
+        public SimpleSnakePart CriateSimplePart(CustomList.List<SnekePartMove> list, ConsoleGraphics _graphics)
         {
             Random random = new Random();
 
@@ -29,24 +27,15 @@ namespace Snake
                     yCord = size * random.Next(1, _lines);
                 }
             }
-            listSimple.Add(new SimpleSnakePart(0xFF325230, xCord, yCord, _graphics));          
+            return new SimpleSnakePart(0xFF325230, xCord, yCord, _graphics);
         }
 
-        public override void Render(ConsoleGraphics graphics)
+        public bool Contact(SimpleSnakePart simplePart, SnekePartMove movePart)
         {
-            base.Render(graphics);
-        }
-
-        public void Contact(SimpleSnakePart simpleParts, SnekePartMove moveParts, ref bool contact)
-        {
-            if (simpleParts.X == moveParts.X && simpleParts.Y == moveParts.Y)
-            {
-                contact = true;
-            }
+            if (simplePart.X == movePart.X && simplePart.Y == movePart.Y)
+                return true;
             else
-            {
-                contact = false;
-            }
+                return false;
         }
     }
 }

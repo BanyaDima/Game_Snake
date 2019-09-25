@@ -15,26 +15,34 @@ namespace Snake
         protected const int speed = 40;
         protected const int _columns = 12;
         protected const int _lines = 12;
+        private readonly int SideBorder = 480;
+        private readonly int BottomLine = 480;
         private int xSpeed;
         private int ySpeed;
         public int X { get; internal set; }
         public int Y { get; internal set; }
-        public int SideBorder { get => size * _columns; }
-        public int BottomLine { get => size * _lines; }
-
-        public SnekePartMove() { }
 
         public SnekePartMove(uint color, int x, int y, ConsoleGraphics graphics)
         {
+            _graphics = graphics;
             _color = color;
             X = x;
             Y = y;
-            _graphics = graphics;
         }
 
         public virtual void Render(ConsoleGraphics graphics)
         {
             graphics.FillRectangle(_color, X, Y, size, size);
+        }
+
+        public bool IsAlive()
+        {
+            if (X > SideBorder - size || Y > BottomLine - size)
+                return false;
+            else if (X < 0 || Y < 0)
+                return false;
+            else
+                return true;
         }
 
         public void Update(GameEngine engine)
@@ -65,12 +73,7 @@ namespace Snake
             }
 
             X += xSpeed;
-            Y += ySpeed;
-
-            if (X > SideBorder - size || Y > BottomLine - size)
-                engine.isAlive = false;
-            else if (X < 0 || Y < 0)
-                engine.isAlive = false;
+            Y += ySpeed;    
         }
     }
 }
