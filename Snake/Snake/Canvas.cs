@@ -8,7 +8,7 @@ using NConsoleGraphics;
 namespace Snake
 {
     class Canvas
-    {        
+    {
         private readonly uint _color;
         private readonly int xMax = 480;
         private readonly int yMax = 480;

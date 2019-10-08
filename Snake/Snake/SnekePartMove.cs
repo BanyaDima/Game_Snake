@@ -45,16 +45,16 @@ namespace Snake
                 return true;
         }
 
-        public void Update(GameEngine engine)
+        public void Update()
         {
             if (Input.IsKeyDown(Keys.LEFT))
             {
-                ySpeed = 0;                
+                ySpeed = 0;
                 xSpeed = -speed;
             }
             else if (Input.IsKeyDown(Keys.RIGHT))
             {
-                ySpeed = 0;                
+                ySpeed = 0;
                 xSpeed = speed;
             }
             else if (Input.IsKeyDown(Keys.UP))
@@ -64,12 +64,12 @@ namespace Snake
             }
             else if (Input.IsKeyDown(Keys.DOWN))
             {
-                xSpeed = 0;               
+                xSpeed = 0;
                 ySpeed = speed;
             }
 
             X += xSpeed;
-            Y += ySpeed;    
+            Y += ySpeed;
         }
     }
 }

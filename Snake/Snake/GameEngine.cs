@@ -34,11 +34,11 @@ namespace Snake
 
                 if (Input.IsKeyDown(Keys.KEY_N))
                 {
-                    return  false;
+                    return false;
                 }
                 else if (Input.IsKeyDown(Keys.KEY_Y))
                 {
-                     return true;
+                    return true;
                 }
                 _graphics.FlipPages();
 
@@ -48,31 +48,30 @@ namespace Snake
 
         public void Play()
         {
-            SnekePartMove snakePart = new SnekePartMove(0xFF1e8a19, 0, 200, _graphics);
+            SnekePartMove headPart = new SnekePartMove(0xFF1e8a19, 0, 200, _graphics);
             SimpleSnakePart simpleSnakePart = new SimpleSnakePart(0xFF325230, 400, 200, _graphics);
-            Snake snake = new Snake(this);
 
-            snakeParts.Add(snakePart);            
+            snakeParts.Add(headPart);
 
-            while (snakePart.IsAlive())
+            while (headPart.IsAlive())
             {
                 _canvas.Render(_graphics);
 
-                snake.Render(_graphics, snakeParts);
-                snake.Move(snakeParts);
+                SnakeHelper.Render(_graphics, snakeParts);
+                SnakeHelper.Move(snakeParts);
 
                 simpleSnakePart.Render(_graphics);
 
-                if (snake.ContactWithOneself(snakeParts))
+                if (SnakeHelper.ContactWithOneself(snakeParts))
                     break;
 
-                if (simpleSnakePart.Contact(simpleSnakePart, snakePart))
+                if (simpleSnakePart.Contact(simpleSnakePart, headPart))
                 {
                     snakeParts.Add(simpleSnakePart);
                     simpleSnakePart = simpleSnakePart.CriateSimplePart(snakeParts, _graphics);
                     points++;
                 }
-        
+
                 _graphics.FlipPages();
 
                 Thread.Sleep(100);

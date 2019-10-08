@@ -9,22 +9,22 @@ namespace Snake
 {
     class SimpleSnakePart : SnekePartMove
     {
+        private readonly Random _random = new Random();
+
         public SimpleSnakePart(uint color, int x, int y, ConsoleGraphics graphics) : base(color, x, y, graphics) { }
 
         public SimpleSnakePart CriateSimplePart(CustomList.List<SnekePartMove> list, ConsoleGraphics _graphics)
         {
-            Random random = new Random();
-
-            int xCord = size * random.Next(1, _columns);
-            int yCord = size * random.Next(1, _lines);
+            int xCord = size * _random.Next(1, _columns);
+            int yCord = size * _random.Next(1, _lines);
 
             for (int i = 0; i < list.Count; i++)
             {
                 if (xCord == list[i].X && yCord == list[i].Y)
                 {
                     i = -1;
-                    xCord = size * random.Next(1, _columns);
-                    yCord = size * random.Next(1, _lines);
+                    xCord = size * _random.Next(1, _columns);
+                    yCord = size * _random.Next(1, _lines);
                 }
             }
             return new SimpleSnakePart(0xFF325230, xCord, yCord, _graphics);
